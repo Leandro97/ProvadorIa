@@ -38,11 +38,14 @@ public class Main {
 		Scanner read = new Scanner(System.in);
 		ArrayList<String> atomos = new ArrayList<String>();
 		ArrayList<String> expressoes = new ArrayList<String>();
-		ArrayList<String> conclusoes = new ArrayList<String>();
+		String conclusao;
 		
 		System.out.println("Digite as premissas (uma por linha). Digite # para terminar.");
 		for(;;) {
 			String texto = read.nextLine();
+			String temp1 = texto.trim();
+			texto = temp1.replace(" ", "");
+			
 			if(texto.equals("#")) break;
 			if(!testa(texto)) {
 				System.out.println("Expressão inválida! Informe uma expressão do tipo \"A\" ou \"A->B\"");
@@ -52,6 +55,9 @@ public class Main {
 				expressoes.add(texto);
 			}
 		}
+		
+		System.out.println("Digite a conclusão");
+		conclusao = read.nextLine().trim();
 
 		Collections.sort(atomos.subList(0, atomos.size()));
 		Collections.sort(expressoes.subList(0, expressoes.size()));
@@ -64,6 +70,19 @@ public class Main {
 			System.out.println("A partir das informações dadas podemos concluir que: " + retorno);
 		} else {
 			System.out.println("Não é possível chegar a uma conclusão com os dados informados.");
+		}
+		
+		int aux = 0;
+		for(int i = 0; i < retorno.size(); i++) {
+			if(retorno.get(i).toString().equals(conclusao)) {
+				System.out.println("É possível concluir que " + conclusao + " é válido.");
+				aux++;
+				break;
+			} 
+		}
+		
+		if(aux == 0) {
+			System.out.println("Não é possível concluir " + conclusao);
 		}
 		
 	}
